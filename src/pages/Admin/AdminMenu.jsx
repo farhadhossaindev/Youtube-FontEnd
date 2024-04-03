@@ -24,6 +24,14 @@ function AdminMenu() {
                         <h1>Dashboard</h1>
                     </div>
                 </NavLink>
+
+                <NavLink to={'/dashboard/admin/products'}>
+                    <div className='text-xl font-semibold flex  items-center gap-3 mx-1 my-1 px-3 py-3 hover:bg-black hover:text-white hover:duration-500 hover:rounded-md cursor-pointer'>
+                        <GiLargeDress />
+                        <h1>All Product</h1>
+                    </div>
+                </NavLink>
+
                 <Link to={'/dashboard/admin/addproduct'}>
                     <div className='text-xl font-semibold flex  items-center gap-3 mx-1 my-1 px-3 py-3 hover:bg-black hover:text-white hover:duration-500 hover:rounded-md cursor-pointer'>
                         <GiLargeDress />

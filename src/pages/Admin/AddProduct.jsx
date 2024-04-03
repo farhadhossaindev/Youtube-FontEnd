@@ -4,7 +4,9 @@ import AdminMenu from './AdminMenu';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import {  useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { Select } from 'antd';
+const { Option } = Select
 
 function AddProduct() {
 
@@ -17,7 +19,7 @@ function AddProduct() {
   const [quantity, setQuantity] = useState('')
   const [shipping, setShipping] = useState('')
   const [photo, setPhoto] = useState('')
-  const navigate = useNavigate( )
+  const navigate = useNavigate()
 
 
   // get all category
@@ -53,12 +55,14 @@ function AddProduct() {
       productData.append('quantity', quantity);
       productData.append('photo', photo);
       productData.append('category', category);
+      productData.append('shipping', shipping);
 
       const { data } = await axios.post('http://localhost:8080/api/v1/product/create-product', productData);
 
       if (data.success) {
         toast.success('Product Created successfully');
         navigate('/dashboard/admin/products')
+       
       } else {
         toast.error(data.message);
       }
@@ -67,7 +71,6 @@ function AddProduct() {
       toast.error('Something went wrong');
     }
   };
-
 
   return (
     <Layout>
@@ -81,18 +84,19 @@ function AddProduct() {
 
 
           <div className="m-1 flex justify-center mt-5">
-            <select
-              className="select select-warning w-full max-w-xs"
-              defaultValue="Select Category" // or use `value` if you want to control it through state
-              onChange={(event) => setCategory(event.target.value)}
+            <Select
+              className='w-[35%]'
+              defaultValue="Select Category"
+              showSearch
+              onChange={(value) => setCategory(value)}
             >
-              <option disabled>Select Category</option>
+              <Select.Option disabled>Select Category</Select.Option>
               {categories.map(c => (
                 <option value={c._id} key={c._id} >{c.name}</option>
 
               ))}
 
-            </select>
+            </Select>
           </div>
 
 
@@ -145,10 +149,14 @@ function AddProduct() {
 
 
           <div className='flex justify-center mt-5'>
-            <select className="select select-warning w-full max-w-xs" value={shipping} onChange={(e) => setShipping(e.target.value)}>
-              <option disabled value="">Select Shipping</option>
-              <option value="1">Yes</option>
+            <select
+              className='w-[30%]'
+              onChange={(e) => setShipping(e.target.value)}
+            >
+              <option>Select Shipping</option>
               <option value="0">No</option>
+              <option value="1">Yes</option>
+
             </select>
 
           </div>
